@@ -88,7 +88,7 @@ def _find_more_vertices(A, b, nonneg, mins, v, V):
     return V
 
 # Construct vertices v[0], ..., v[n] of K by maximizing functions.
-# Instead of Khachiyan's algorithm, but I use simplex method.
+# Instead of Khachiyan's algorithm I use simplex method.
 def _construct_vertices(A, b, nonneg, mins):
     #print('Constructing vertices of K')
     m, n = A.shape

@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from sympy import Matrix, pprint, ceiling
+from sympy import Matrix, ceiling
 
 def _extgcd(a, b):
     swapped = False
@@ -234,8 +234,6 @@ def main():
     b = Matrix([4, 5, 6])
     pprint(B)
     pprint(b)
-    x = solution_space(B, b)
-    pprint(x)
     """
 
 if __name__ == '__main__':
