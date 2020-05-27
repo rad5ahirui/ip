@@ -207,57 +207,6 @@ def hermite_normal_form_row(A):
         # Step 6
     return U, A
 
-def solution_space(A, b):
-    m, n = A.shape
-    r = min(m, n)
-    i = 0
-    j = 0
-    leading_entries = []
-    other_entries = []
-    while i < m and j < n:
-        # Pivoting
-        pivot = -1
-        for k in range(i, m):
-            if A[k, j] != 0:
-                pivot = k
-                break
-        if pivot == -1:
-            other_entries.append(j)
-            j += 1
-            continue
-        if pivot != i:
-            A.row_swap(i, pivot)
-            b.row_swap(i, pivot)
-        b[i] /= A[i, j]
-        A[i, :] /= A[i, j]
-        for k in range(i + 1, m):
-            b[k] = b[k] - A[k, j] * b[i]
-            A[k, :] = A.row(k) - A[k, j] * A.row(i)
-        leading_entries.append(j)
-        i += 1
-        j += 1
-    rankA = i
-    rankAb = rankA
-    if rankA < m and max(b[rankA:, :]) != 0:
-        rankAb += 1
-        if rankAb < m:
-            b[rankAb:] = Matrix.zeros(m - rankAb, 1)
-        return None
-    if rankA > 1:
-        for i, pivot in enumerate(leading_entries[1:]):
-            i += 1
-            for j in range(i):
-                b[j] = b[j] - A[j, pivot] * b[i]
-                A[j, :] = A.row(j) - A[j, pivot] * A.row(i)
-    x = [Matrix.zeros(n, 1)]
-    for i, freevar in enumerate(other_entries):
-        x.append(Matrix(n, 1, lambda x, y: 1 if x == freevar else 0))
-    for i, pivot in enumerate(leading_entries):
-        x[0][i] = b[i]
-        for j, freevar in enumerate(other_entries):
-            x[1 + j][i] = -A[i, freevar]
-    return x
-
 def main():
     from sympy import pprint
     A = Matrix([[4, 0, 0],
